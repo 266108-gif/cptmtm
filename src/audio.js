@@ -456,17 +456,17 @@ class AudioEngine {
     this.bgmTime = this.ctx.currentTime;
     
     const isFast = (type === 'fast');
-    this.tempo = isFast ? 186 : 80; // Energetic running tempo (186 BPM)
+    this.tempo = isFast ? 186 : 80; // High-energy fast tempo (186 BPM)
     const stepDuration = 60 / this.tempo / 4; // 16th notes
     
-    // Upbeat Am -> F -> C -> G retro synthpop progression
+    // Intense Am -> F -> C -> G progression
     const fastBass = [110.00, 110.00, 87.31, 87.31, 130.81, 130.81, 98.00, 98.00]; // A2, F2, C3, G2
     const fastMelody = [
-      440.00, 493.88, 523.25, 0,
-      523.25, 587.33, 659.25, 0,
-      659.25, 587.33, 523.25, 587.33,
-      783.99, 0, 659.25, 587.33
-    ]; // Catchy synthpop running melody (Am-F-C-G style)
+      440.00, 523.25, 587.33, 659.25,
+      880.00, 783.99, 880.00, 1046.50,
+      880.00, 783.99, 659.25, 587.33,
+      523.25, 587.33, 440.00, 0
+    ]; // Powerful action anime minor lead melody
     
     // Soft, sweet indie ballad chords (for headphones ending)
     const softBass = [130.81, 130.81, 196.00, 196.00, 220.00, 220.00, 174.61, 174.61]; // C3, G3, A3, F3
@@ -474,7 +474,7 @@ class AudioEngine {
       523.25, 587.33, 659.25, 0, 587.33, 0, 523.25, 0,
       440.00, 0, 392.00, 440.00, 523.25, 0, 0, 0
     ];
-
+ 
     const bassPattern = isFast ? fastBass : softBass;
     const melodyPattern = isFast ? fastMelody : softMelody;
 
@@ -485,7 +485,7 @@ class AudioEngine {
 
       const lookAhead = 0.1; // schedule 100ms in advance
       while (this.bgmTime < this.ctx.currentTime + lookAhead) {
-        // 1. Play Bass on every quarter note (step % 4 === 0)
+        // 1. Play Bass
         if (step % 2 === 0) {
           const bassIdx = Math.floor(step / 2) % bassPattern.length;
           const bassNote = bassPattern[bassIdx];
@@ -493,42 +493,59 @@ class AudioEngine {
           const bassOsc = this.ctx.createOscillator();
           const bassGain = this.ctx.createGain();
           
-          bassOsc.type = 'triangle';
+          if (isFast) {
+            bassOsc.type = 'sawtooth'; // Fat buzzing sawtooth wave
+            const bassFilter = this.ctx.createBiquadFilter();
+            bassFilter.type = 'lowpass';
+            bassFilter.frequency.setValueAtTime(600, this.bgmTime); // Fat lowpass cutoff
+            
+            bassOsc.connect(bassFilter);
+            bassFilter.connect(bassGain);
+          } else {
+            bassOsc.type = 'triangle';
+            bassOsc.connect(bassGain);
+          }
+          
           bassOsc.frequency.setValueAtTime(bassNote, this.bgmTime);
           
-          bassGain.gain.setValueAtTime(isFast ? 0.13 : 0.12, this.bgmTime);
+          bassGain.gain.setValueAtTime(isFast ? 0.16 : 0.12, this.bgmTime);
           bassGain.gain.exponentialRampToValueAtTime(0.001, this.bgmTime + stepDuration * 1.8);
           
-          bassOsc.connect(bassGain);
           bassGain.connect(this.masterGain);
           
           bassOsc.start(this.bgmTime);
           bassOsc.stop(this.bgmTime + stepDuration * 1.9);
         }
-
+ 
         // 2. Play Melody
         const melIdx = step % melodyPattern.length;
         const melNote = melodyPattern[melIdx];
-        if (melNote > 0 && (isFast ? Math.random() > 0.15 : true)) {
+        if (melNote > 0 && (isFast ? Math.random() > 0.05 : true)) { // Keep notes solid
           const melOsc = this.ctx.createOscillator();
           const melGain = this.ctx.createGain();
           
-          melOsc.type = isFast ? 'triangle' : 'sine'; // Warm triangle wave for retro vibe in game, sine for ending
           melOsc.frequency.setValueAtTime(melNote, this.bgmTime);
           
-          // Muffle soft BGM slightly (headphones feel)
-          if (!isFast) {
+          if (isFast) {
+            melOsc.type = 'sawtooth'; // Heavy synth lead
+            const melFilter = this.ctx.createBiquadFilter();
+            melFilter.type = 'lowpass';
+            melFilter.frequency.setValueAtTime(1400, this.bgmTime); // Smooth cutoff
+            
+            melOsc.connect(melFilter);
+            melFilter.connect(melGain);
+          } else {
+            melOsc.type = 'sine';
+            
             const filter = this.ctx.createBiquadFilter();
             filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(800, this.bgmTime); // filter high freq
-            melOsc.disconnect();
+            filter.frequency.setValueAtTime(800, this.bgmTime);
+            
             melOsc.connect(filter);
             filter.connect(melGain);
-          } else {
-            melOsc.connect(melGain);
           }
           
-          melGain.gain.setValueAtTime(isFast ? 0.05 : 0.05, this.bgmTime);
+          melGain.gain.setValueAtTime(isFast ? 0.06 : 0.05, this.bgmTime);
           melGain.gain.exponentialRampToValueAtTime(0.001, this.bgmTime + stepDuration * (isFast ? 1.5 : 3));
           
           melGain.connect(this.masterGain);
