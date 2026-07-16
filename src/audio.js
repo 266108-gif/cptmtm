@@ -456,15 +456,17 @@ class AudioEngine {
     this.bgmTime = this.ctx.currentTime;
     
     const isFast = (type === 'fast');
-    this.tempo = isFast ? 176 : 80; // High-energy fast tempo (176 BPM)
+    this.tempo = isFast ? 186 : 80; // Energetic running tempo (186 BPM)
     const stepDuration = 60 / this.tempo / 4; // 16th notes
     
-    // Cheerful, driving arcade retro bass & melody
-    const fastBass = [130.81, 146.83, 164.81, 196.00, 174.61, 164.81, 146.83, 130.81]; // C3 -> D3 -> E3 -> G3 -> F3 -> E3
+    // Upbeat Am -> F -> C -> G retro synthpop progression
+    const fastBass = [110.00, 110.00, 87.31, 87.31, 130.81, 130.81, 98.00, 98.00]; // A2, F2, C3, G2
     const fastMelody = [
-      523.25, 587.33, 659.25, 783.99, 0, 783.99, 659.25, 783.99,
-      880.00, 783.99, 880.00, 987.77, 0, 987.77, 783.99, 880.00
-    ]; // Catchy arcade running melody (C5, D5, E5, G5, A5, B5)
+      440.00, 493.88, 523.25, 0,
+      523.25, 587.33, 659.25, 0,
+      659.25, 587.33, 523.25, 587.33,
+      783.99, 0, 659.25, 587.33
+    ]; // Catchy synthpop running melody (Am-F-C-G style)
     
     // Soft, sweet indie ballad chords (for headphones ending)
     const softBass = [130.81, 130.81, 196.00, 196.00, 220.00, 220.00, 174.61, 174.61]; // C3, G3, A3, F3
