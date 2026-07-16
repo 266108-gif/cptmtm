@@ -96,7 +96,8 @@ export function loadStage2(gameEngine) {
       <div class="room-floor" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 30px; background: #cbd5e1; border-top: 3px solid #94a3b8; z-index: 0;"></div>
 
       <!-- Standing Protagonist (Dressed in school uniform, unified single SVG to prevent floating limbs) -->
-      <div id="hero" class="character-avatar" style="position: absolute; bottom: 30px; left: 80px; z-index: 10; width: 60px; height: 150px; display: flex; flex-direction: column; align-items: center;">
+      <!-- z-index: 4 puts it below the dark filter overlay (z-index: 5) so it becomes pitch dark before lights turn on! -->
+      <div id="hero" class="character-avatar" style="position: absolute; bottom: 30px; left: 80px; z-index: 4; width: 60px; height: 150px; display: flex; flex-direction: column; align-items: center;">
         <svg width="60" height="150" viewBox="0 0 60 150">
           <!-- Suit Arms -->
           <rect x="2" y="55" width="10" height="45" fill="#1e3a8a" rx="5"/>
@@ -126,26 +127,6 @@ export function loadStage2(gameEngine) {
         </svg>
       </div>
 
-      <!-- Family Dog (Wagging tail next to hero to keep company) -->
-      <div id="family-dog" style="position: absolute; bottom: 30px; left: 140px; z-index: 10;">
-        <svg width="40" height="35" viewBox="0 0 40 35">
-          <!-- Legs -->
-          <rect x="10" y="24" width="4" height="8" fill="#d97706"/>
-          <rect x="24" y="24" width="4" height="8" fill="#d97706"/>
-          <!-- Body -->
-          <rect x="8" y="10" width="22" height="15" fill="#d97706" rx="4"/>
-          <!-- Head -->
-          <circle cx="32" cy="12" r="8" fill="#d97706"/>
-          <!-- Muzzle & nose -->
-          <rect x="34" y="12" width="6" height="5" fill="#f59e0b" rx="1"/>
-          <circle cx="39" cy="13" r="1.5" fill="black"/>
-          <!-- Ear -->
-          <path d="M28 8 Q24 16 26 18" fill="#92400e" stroke="#92400e" stroke-width="2"/>
-          <!-- Tail (beat animate) -->
-          <path d="M8 12 Q2 4 4 2" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round" style="animation: heartbeat 0.3s infinite alternate; transform-origin: 8px 12px;"/>
-        </svg>
-      </div>
-
       <!-- Sofa Container -->
       <div id="sofa-box" class="sofa-container" style="cursor: pointer;">
         <!-- Sofa SVG -->
@@ -161,8 +142,9 @@ export function loadStage2(gameEngine) {
         </svg>
       </div>
 
-      <!-- Backpack item (Sibling of sofa, z-index 11, sitting on the cushion correctly at bottom: 45px) -->
-      <div id="backpack" class="backpack-item" style="display: none; position: absolute; bottom: 45px; left: 200px; z-index: 11;">
+      <!-- Backpack item (Sibling of sofa, z-index 11, sitting on the cushion correctly at bottom: 62px) -->
+      <!-- top: auto !important overrides absolute top set in screens.css to prevent it from floating high -->
+      <div id="backpack" class="backpack-item" style="display: none; position: absolute; top: auto !important; bottom: 62px; left: 190px; z-index: 11;">
         <svg width="45" height="52" viewBox="0 0 45 52">
           <rect x="5" y="10" width="35" height="40" fill="#0284c7" rx="10" stroke="#075985" stroke-width="2.5"/>
           <path d="M15 10 Q22.5 2 30 10" stroke="#075985" stroke-width="3" fill="none" stroke-linecap="round"/>
