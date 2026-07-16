@@ -456,15 +456,15 @@ class AudioEngine {
     this.bgmTime = this.ctx.currentTime;
     
     const isFast = (type === 'fast');
-    this.tempo = isFast ? 140 : 80;
+    this.tempo = isFast ? 176 : 80; // High-energy fast tempo (176 BPM)
     const stepDuration = 60 / this.tempo / 4; // 16th notes
     
-    // Upbeat electronic base notes and melody
-    const fastBass = [110.00, 110.00, 130.81, 130.81, 146.83, 146.83, 164.81, 164.81]; // A2, C3, D3, E3
+    // Cheerful, driving arcade retro bass & melody
+    const fastBass = [130.81, 146.83, 164.81, 196.00, 174.61, 164.81, 146.83, 130.81]; // C3 -> D3 -> E3 -> G3 -> F3 -> E3
     const fastMelody = [
-      440.00, 0, 440.00, 523.25, 0, 587.33, 0, 659.25,
-      587.33, 0, 523.25, 0, 440.00, 0, 392.00, 440.00
-    ];
+      523.25, 587.33, 659.25, 783.99, 0, 783.99, 659.25, 783.99,
+      880.00, 783.99, 880.00, 987.77, 0, 987.77, 783.99, 880.00
+    ]; // Catchy arcade running melody (C5, D5, E5, G5, A5, B5)
     
     // Soft, sweet indie ballad chords (for headphones ending)
     const softBass = [130.81, 130.81, 196.00, 196.00, 220.00, 220.00, 174.61, 174.61]; // C3, G3, A3, F3
@@ -494,7 +494,7 @@ class AudioEngine {
           bassOsc.type = 'triangle';
           bassOsc.frequency.setValueAtTime(bassNote, this.bgmTime);
           
-          bassGain.gain.setValueAtTime(isFast ? 0.18 : 0.12, this.bgmTime);
+          bassGain.gain.setValueAtTime(isFast ? 0.13 : 0.12, this.bgmTime);
           bassGain.gain.exponentialRampToValueAtTime(0.001, this.bgmTime + stepDuration * 1.8);
           
           bassOsc.connect(bassGain);
@@ -511,7 +511,7 @@ class AudioEngine {
           const melOsc = this.ctx.createOscillator();
           const melGain = this.ctx.createGain();
           
-          melOsc.type = isFast ? 'sine' : 'sine'; // gentle tone
+          melOsc.type = isFast ? 'triangle' : 'sine'; // Warm triangle wave for retro vibe in game, sine for ending
           melOsc.frequency.setValueAtTime(melNote, this.bgmTime);
           
           // Muffle soft BGM slightly (headphones feel)
@@ -526,7 +526,7 @@ class AudioEngine {
             melOsc.connect(melGain);
           }
           
-          melGain.gain.setValueAtTime(isFast ? 0.07 : 0.05, this.bgmTime);
+          melGain.gain.setValueAtTime(isFast ? 0.05 : 0.05, this.bgmTime);
           melGain.gain.exponentialRampToValueAtTime(0.001, this.bgmTime + stepDuration * (isFast ? 1.5 : 3));
           
           melGain.connect(this.masterGain);
