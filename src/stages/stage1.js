@@ -118,36 +118,35 @@ export function loadStage1(gameEngine) {
         </div>
       </div>
 
-      <!-- Standing Protagonist (Hidden initially while sleeping) -->
-      <div id="hero" class="character-avatar" style="display: none;">
-        <div class="character-head">
-          <svg width="48" height="48" viewBox="0 0 48 48">
-            <circle cx="24" cy="24" r="22" fill="#fed7aa" stroke="#f97316" stroke-width="2"/>
-            <circle cx="16" cy="20" r="5" fill="white" stroke="black" stroke-width="1.5"/>
-            <circle cx="16" cy="20" r="2" fill="black"/>
-            <circle cx="32" cy="20" r="5" fill="white" stroke="black" stroke-width="1.5"/>
-            <circle cx="32" cy="20" r="2" fill="black"/>
-            <ellipse cx="24" cy="33" rx="6" ry="8" fill="#7f1d1d"/>
-            <path d="M38 10 Q37 15 35 14" stroke="#3b82f6" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <!-- Standing Protagonist (Hidden initially while sleeping, unified single SVG to prevent floating limbs) -->
+      <div id="hero" class="character-avatar" style="display: none; position: absolute; bottom: 30px; left: 310px; z-index: 2; width: 60px; height: 150px;">
+        <div id="hero-svg-container" style="width: 100%; height: 100%;">
+          <!-- Undressed (Underwear singlet/boxers) SVG representation -->
+          <svg width="60" height="150" viewBox="0 0 60 150">
+            <!-- Skin Arms -->
+            <rect x="2" y="55" width="10" height="45" fill="#fed7aa" rx="5"/>
+            <rect x="48" y="55" width="10" height="45" fill="#fed7aa" rx="5"/>
+            <!-- Skin Legs -->
+            <rect x="15" y="95" width="12" height="45" fill="#fed7aa" rx="2"/>
+            <rect x="33" y="95" width="12" height="45" fill="#fed7aa" rx="2"/>
+            <rect x="13" y="140" width="16" height="8" fill="#a8a29e" rx="3"/>
+            <rect x="31" y="140" width="16" height="8" fill="#a8a29e" rx="3"/>
+            
+            <!-- Torso bare skin -->
+            <rect x="10" y="50" width="40" height="45" fill="#fed7aa" rx="4"/>
+            <!-- Blue boxers -->
+            <rect x="8" y="85" width="44" height="20" fill="#3b82f6" rx="2"/>
+            <rect x="25" y="85" width="10" height="20" fill="#1d4ed8"/>
+
+            <!-- Head -->
+            <circle cx="30" cy="25" r="22" fill="#fed7aa" stroke="#f97316" stroke-width="1.5"/>
+            <!-- Eyes (shocked) -->
+            <circle cx="21" cy="22" r="3.5" fill="white" stroke="black" stroke-width="1"/>
+            <circle cx="21" cy="22" r="1.5" fill="black"/>
+            <circle cx="39" cy="22" r="3.5" fill="white" stroke="black" stroke-width="1"/>
+            <circle cx="39" cy="22" r="1.5" fill="black"/>
+            <ellipse cx="30" cy="35" rx="5" ry="7" fill="#7f1d1d"/>
           </svg>
-        </div>
-        <div id="hero-body" class="character-body-avatar">
-          <svg id="hero-underwear-svg" width="60" height="90" viewBox="0 0 60 90">
-            <rect x="15" y="0" width="30" height="60" fill="#fed7aa"/>
-            <rect x="12" y="45" width="36" height="25" fill="#3b82f6" rx="2"/>
-            <rect x="25" y="45" width="10" height="25" fill="#1d4ed8"/>
-          </svg>
-          <svg id="hero-uniform-svg" width="60" height="90" viewBox="0 0 60 90" style="display: none;">
-            <rect x="10" y="0" width="40" height="70" fill="#1e3a8a" rx="5" stroke="#172554" stroke-width="2"/>
-            <path d="M20 0 L30 20 L40 0" fill="#fed7aa"/>
-            <path d="M22 0 L25 15 L30 20 L35 15 L38 0" stroke="white" stroke-width="2.5" fill="none"/>
-            <path d="M28 20 L32 20 L33 45 L30 50 L27 45 Z" fill="#f43f5e"/>
-            <rect x="12" y="65" width="36" height="15" fill="#475569"/>
-          </svg>
-        </div>
-        <div class="character-legs">
-          <div class="character-leg" style="background:#fed7aa;"></div>
-          <div class="character-leg" style="background:#fed7aa;"></div>
         </div>
       </div>
 
@@ -220,8 +219,7 @@ export function loadStage1(gameEngine) {
   const uniformEl = document.getElementById('uniform-item');
   const exitDoorEl = document.getElementById('exit-door');
 
-  const heroUnderwear = document.getElementById('hero-underwear-svg');
-  const heroUniform = document.getElementById('hero-uniform-svg');
+
 
   const clothesModal = document.getElementById('clothes-modal');
   const btnPj = document.getElementById('btn-pj');
@@ -379,9 +377,39 @@ export function loadStage1(gameEngine) {
     const uniformG = document.getElementById('uniform-item');
     if (uniformG) uniformG.style.display = 'none';
     
-    // Swap skin
-    heroUnderwear.style.display = 'none';
-    heroUniform.style.display = 'block';
+    // Swap skin to school uniform
+    const svgContainer = document.getElementById('hero-svg-container');
+    if (svgContainer) {
+      svgContainer.innerHTML = `
+        <svg width="60" height="150" viewBox="0 0 60 150">
+          <!-- Suit Arms -->
+          <rect x="2" y="55" width="10" height="45" fill="#1e3a8a" rx="5"/>
+          <circle cx="7" cy="100" r="5" fill="#fed7aa"/>
+          <rect x="48" y="55" width="10" height="45" fill="#1e3a8a" rx="5"/>
+          <circle cx="53" cy="100" r="5" fill="#fed7aa"/>
+
+          <!-- Suit Legs -->
+          <rect x="15" y="95" width="12" height="45" fill="#475569" rx="2"/>
+          <rect x="13" y="140" width="16" height="8" fill="#1e293b" rx="3"/>
+          <rect x="33" y="95" width="12" height="45" fill="#475569" rx="2"/>
+          <rect x="31" y="140" width="16" height="8" fill="#1e293b" rx="3"/>
+
+          <!-- Body Uniform -->
+          <rect x="10" y="50" width="40" height="50" fill="#1e3a8a" rx="6" stroke="#172554" stroke-width="1.5"/>
+          <path d="M20 50 L30 65 L40 50" fill="#fed7aa"/>
+          <path d="M22 50 L25 60 L30 65 L35 60 L38 50" stroke="white" stroke-width="2" fill="none"/>
+          <path d="M28 65 L32 65 L33 80 L30 85 L27 80 Z" fill="#f43f5e"/>
+
+          <!-- Head -->
+          <circle cx="30" cy="25" r="22" fill="#fed7aa" stroke="#f97316" stroke-width="1.5"/>
+          <circle cx="21" cy="22" r="3.5" fill="white" stroke="black" stroke-width="1"/>
+          <circle cx="21" cy="22" r="1.5" fill="black"/>
+          <circle cx="39" cy="22" r="3.5" fill="white" stroke="black" stroke-width="1"/>
+          <circle cx="39" cy="22" r="1.5" fill="black"/>
+          <ellipse cx="30" cy="35" rx="5" ry="7" fill="#7f1d1d"/>
+        </svg>
+      `;
+    }
 
     showOkEffect("교복 장착 OK!!", () => {
       gameEngine.setDialogue("주인공", "교복을 완벽하게 입었어! 지체하지 말고 거실로 나가자!");

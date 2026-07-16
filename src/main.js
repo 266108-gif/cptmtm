@@ -790,20 +790,86 @@ class GameEngine {
     const app = this.getAppEl();
     app.innerHTML = `
       <div class="screen ending-screen">
-        <div class="ending-card">
-          <div class="fail-avatar-container" style="display:flex; justify-content:center; margin-bottom:15px;">
-            <svg width="80" height="80" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="45" fill="#f43f5e" />
-              <line x1="30" y1="40" x2="42" y2="48" stroke="#0f0f1b" stroke-width="6" stroke-linecap="round" />
-              <line x1="70" y1="40" x2="58" y2="48" stroke="#0f0f1b" stroke-width="6" stroke-linecap="round" />
-              <path d="M35 50 Q30 70 30 85" stroke="#3b82f6" stroke-width="4" stroke-linecap="round" fill="none" />
-              <path d="M65 50 Q70 70 70 85" stroke="#3b82f6" stroke-width="4" stroke-linecap="round" fill="none" />
-              <path d="M35 70 Q50 60 65 70" stroke="#0f0f1b" stroke-width="5" stroke-linecap="round" fill="none" />
-            </svg>
+        <div class="ending-card" style="max-width: 500px;">
+          <!-- Classroom scolding animation sequence -->
+          <div class="bus-animation-box" id="fail-anim-frame" style="position: relative; width: 100%; height: 170px; background: linear-gradient(to bottom, #475569, #1e293b); border: 3px solid #64748b; border-radius: 8px; overflow: hidden; margin-bottom:15px; display: flex; align-items: flex-end; justify-content: center; padding-bottom:10px;">
+            <!-- Blackboard detail -->
+            <div style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 280px; height: 40px; background: #064e3b; border: 3px solid #78350f; border-radius: 2px; box-shadow: inset 0 0 8px black; display: flex; justify-content: center; align-items: center; color: rgba(255,255,255,0.3); font-weight:bold; font-size:12px; font-family:var(--font-sans);">수학 II - 지각생 체벌 현장</div>
+            
+            <!-- Floor line -->
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 25px; background: #64748b; border-top: 2px solid #94a3b8;"></div>
+
+            <!-- Drama actors -->
+            <div style="position: relative; width: 100%; height: 100%; display: flex; justify-content: center; gap: 40px; align-items: flex-end; z-index: 10; padding-bottom:5px;">
+              <!-- Angry Teacher SVG -->
+              <div id="fail-teacher" style="display: none; align-items: center; flex-direction: column;">
+                <svg width="70" height="110" viewBox="0 0 80 130">
+                  <!-- Hair -->
+                  <path d="M20 20 Q40 0 60 20 L65 40 L15 40 Z" fill="#1e1b4b"/>
+                  <!-- Face -->
+                  <circle cx="40" cy="30" r="15" fill="#fed7aa" stroke="#ea580c" stroke-width="1.5"/>
+                  <!-- Eyebrows (angry) -->
+                  <line x1="28" y1="22" x2="37" y2="27" stroke="black" stroke-width="2.5"/>
+                  <line x1="52" y1="22" x2="43" y2="27" stroke="black" stroke-width="2.5"/>
+                  <circle cx="33" cy="28" r="2" fill="black"/>
+                  <circle cx="47" cy="28" r="2" fill="black"/>
+                  <!-- Red angry cross vein -->
+                  <path d="M52 15 L58 21 M58 15 L52 21" stroke="red" stroke-width="2"/>
+                  <!-- Mouth -->
+                  <path d="M33 38 Q40 33 47 38" stroke="black" stroke-width="2.5" fill="none"/>
+                  <!-- Glasses -->
+                  <circle cx="33" cy="28" r="5" fill="none" stroke="black" stroke-width="1.5"/>
+                  <circle cx="47" cy="28" r="5" fill="none" stroke="black" stroke-width="1.5"/>
+                  <line x1="38" y1="28" x2="42" y2="28" stroke="black" stroke-width="1.5"/>
+                  <!-- Suit body -->
+                  <rect x="22" y="45" width="36" height="50" fill="#334155" rx="4"/>
+                  <!-- Arm holding stick -->
+                  <path d="M22 55 L5 80" stroke="#fed7aa" stroke-width="4" stroke-linecap="round"/>
+                  <line x1="5" y1="80" x2="-20" y2="105" stroke="#a16207" stroke-width="3.5" stroke-linecap="round"/>
+                  <!-- Legs -->
+                  <rect x="28" y="95" width="8" height="30" fill="#1e293b"/>
+                  <rect x="44" y="95" width="8" height="30" fill="#1e293b"/>
+                </svg>
+              </div>
+
+              <!-- Crying Hero holding water buckets -->
+              <div id="fail-punished-hero" style="display: none; align-items: center; flex-direction: column;">
+                <svg width="85" height="110" viewBox="0 0 90 120">
+                  <!-- Arms holding buckets -->
+                  <line x1="30" y1="50" x2="10" y2="50" stroke="#fed7aa" stroke-width="5" stroke-linecap="round"/>
+                  <line x1="60" y1="50" x2="80" y2="50" stroke="#fed7aa" stroke-width="5" stroke-linecap="round"/>
+                  <!-- Left Bucket -->
+                  <path d="M5 50 L5 70 L15 70 L15 50 Z" fill="#cbd5e1" stroke="#475569"/>
+                  <rect x="3" y="55" width="14" height="2" fill="#38bdf8"/>
+                  <path d="M5 50 Q10 44 15 50" stroke="silver" stroke-width="1" fill="none"/>
+                  <!-- Right Bucket -->
+                  <path d="M75 50 L75 70 L85 70 L85 50 Z" fill="#cbd5e1" stroke="#475569"/>
+                  <rect x="73" y="55" width="14" height="2" fill="#38bdf8"/>
+                  <path d="M75 50 Q80 44 85 50" stroke="silver" stroke-width="1" fill="none"/>
+                  <!-- Body -->
+                  <rect x="25" y="40" width="40" height="45" fill="#1e3a8a" rx="5"/>
+                  <!-- Kneeling Legs -->
+                  <path d="M25 85 L15 100 L30 105 Z" fill="#172554"/>
+                  <path d="M65 85 L75 100 L60 105 Z" fill="#172554"/>
+                  <!-- Head -->
+                  <circle cx="45" cy="22" r="16" fill="#fed7aa" stroke="#ea580c" stroke-width="1"/>
+                  <!-- Tears -->
+                  <path d="M37 24 Q37 40 34 45 M53 24 Q53 40 56 45" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" fill="none" style="animation: vibrate-alarm 0.1s infinite;"/>
+                  <!-- Eyes -->
+                  <path d="M33 20 L39 22 M57 20 L51 22" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Subtitle -->
+            <div id="fail-subtitles" style="position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.85); color: #fda4af; text-align: center; padding: 6px 10px; font-size: 12px; font-weight: 500; z-index: 20; min-height:36px; display:flex; justify-content:center; align-items:center;">
+              지각 확정... 무자비하게 학교 정문이 굳게 닫혔다.
+            </div>
           </div>
+
           <div class="ending-title-fail">지각 확정...</div>
           
-          <div style="font-size: 14px; color: var(--color-text-muted); line-height: 1.5; margin: 12px 0;">
+          <div style="font-size: 13.5px; color: var(--color-text-muted); line-height: 1.5; margin: 12px 0;">
             어스름한 먼지 너머로 무섭게 화가 난 담임 선생님의<br>
             얼굴이 아른거립니다... 아침 조회가 시작되었습니다.<br>
             <span style="color:var(--color-accent); font-weight:700;">GAME OVER</span>
@@ -816,6 +882,25 @@ class GameEngine {
         </div>
       </div>
     `;
+
+    const failSub = document.getElementById('fail-subtitles');
+    const failTeacher = document.getElementById('fail-teacher');
+    const failHero = document.getElementById('fail-punished-hero');
+
+    // Run failure drama timing sequence
+    setTimeout(() => {
+      if (failTeacher) failTeacher.style.display = 'flex';
+      if (failSub) failSub.innerText = "교실 뒷문이 벌컥 열리며, 눈에서 레이저를 쏘아 대는 담임 선생님이 등장했다!";
+    }, 2000);
+
+    setTimeout(() => {
+      if (failHero) failHero.style.display = 'flex';
+      if (failSub) failSub.innerHTML = `<span style="color:#ef4444; font-weight:bold;">선생님:</span> "주인공! 또 지각이냐?! 당장 뒤로 가서 무릎 꿇고 물버킷 들고 서 있어!"`;
+    }, 4800);
+
+    setTimeout(() => {
+      if (failSub) failSub.innerHTML = `<span style="color:#a5f3fc; font-weight:bold;">주인공:</span> "으아앙... 이불에서 더 빨리 나올걸... 오늘 당번 청소는 망했다... 😭"`;
+    }, 8000);
 
     document.getElementById('end-retry-btn').addEventListener('click', () => {
       audio.playClick();
