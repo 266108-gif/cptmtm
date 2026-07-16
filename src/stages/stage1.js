@@ -25,6 +25,9 @@ export function loadStage1(gameEngine) {
   // Render HTML structure (Beautiful CSS-based SVG layouts instead of emojis)
   viewport.innerHTML = `
     <div class="stage-bedroom">
+      <!-- Floor division line -->
+      <div class="room-floor" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 30px; background: #cbd5e1; border-top: 3px solid #94a3b8; z-index: 0;"></div>
+
       <!-- Bright Morning Room Window SVG (Decoration) -->
       <div class="room-window" style="position: absolute; top: 30px; left: 160px; width: 90px; height: 65px; border: 3.5px solid #854d0e; background: linear-gradient(to bottom, #38bdf8, #bae6fd); border-radius: 4px; z-index: 1; box-shadow: 0 0 15px rgba(56,189,248,0.4);">
         <svg width="100%" height="100%" viewBox="0 0 90 65">

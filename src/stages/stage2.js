@@ -92,6 +92,36 @@ export function loadStage2(gameEngine) {
         <div class="switch-panel-btn"></div>
       </div>
 
+      <!-- Floor division line -->
+      <div class="room-floor" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 30px; background: #cbd5e1; border-top: 3px solid #94a3b8; z-index: 0;"></div>
+
+      <!-- Standing Protagonist (Dressed in school uniform) -->
+      <div id="hero" class="character-avatar" style="position: absolute; bottom: 30px; left: 80px; z-index: 10; display: flex; flex-direction: column; align-items: center;">
+        <div class="character-head">
+          <svg width="48" height="48" viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="22" fill="#fed7aa" stroke="#f97316" stroke-width="2"/>
+            <circle cx="16" cy="20" r="5" fill="white" stroke="black" stroke-width="1.5"/>
+            <circle cx="16" cy="20" r="2" fill="black"/>
+            <circle cx="32" cy="20" r="5" fill="white" stroke="black" stroke-width="1.5"/>
+            <circle cx="32" cy="20" r="2" fill="black"/>
+            <ellipse cx="24" cy="33" rx="6" ry="8" fill="#7f1d1d"/>
+          </svg>
+        </div>
+        <div class="character-body-avatar" style="background: transparent;">
+          <svg width="60" height="90" viewBox="0 0 60 90">
+            <rect x="10" y="0" width="40" height="70" fill="#1e3a8a" rx="5" stroke="#172554" stroke-width="2"/>
+            <path d="M20 0 L30 20 L40 0" fill="#fed7aa"/>
+            <path d="M22 0 L25 15 L30 20 L35 15 L38 0" stroke="white" stroke-width="2.5" fill="none"/>
+            <path d="M28 20 L32 20 L33 45 L30 50 L27 45 Z" fill="#f43f5e"/>
+            <rect x="12" y="65" width="36" height="15" fill="#475569"/>
+          </svg>
+        </div>
+        <div class="character-legs">
+          <div class="character-leg" style="background:#fed7aa;"></div>
+          <div class="character-leg" style="background:#fed7aa;"></div>
+        </div>
+      </div>
+
       <!-- Sofa Container -->
       <div id="sofa-box" class="sofa-container" style="cursor: pointer;">
         <!-- Sofa SVG -->
@@ -105,16 +135,16 @@ export function loadStage2(gameEngine) {
           <rect x="40" y="110" width="12" height="15" fill="#451a03" rx="2"/>
           <rect x="288" y="110" width="12" height="15" fill="#451a03" rx="2"/>
         </svg>
+      </div>
 
-        <!-- Backpack item (appears only after sofa clicked) -->
-        <div id="backpack" class="backpack-item" style="display: none; position: absolute; top: -10px; left: 80px;">
-          <svg width="45" height="52" viewBox="0 0 45 52">
-            <rect x="5" y="10" width="35" height="40" fill="#0284c7" rx="10" stroke="#075985" stroke-width="2.5"/>
-            <path d="M15 10 Q22.5 2 30 10" stroke="#075985" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <rect x="10" y="26" width="25" height="20" fill="#0ea5e9" rx="5" stroke="#075985" stroke-width="2"/>
-            <rect x="12" y="22" width="21" height="4" fill="#cbd5e1" rx="1"/>
-          </svg>
-        </div>
+      <!-- Backpack item (Sibling of sofa for perfect click responsiveness) -->
+      <div id="backpack" class="backpack-item" style="display: none; position: absolute; bottom: 100px; left: 200px; z-index: 11;">
+        <svg width="45" height="52" viewBox="0 0 45 52">
+          <rect x="5" y="10" width="35" height="40" fill="#0284c7" rx="10" stroke="#075985" stroke-width="2.5"/>
+          <path d="M15 10 Q22.5 2 30 10" stroke="#075985" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <rect x="10" y="26" width="25" height="20" fill="#0ea5e9" rx="5" stroke="#075985" stroke-width="2"/>
+          <rect x="12" y="22" width="21" height="4" fill="#cbd5e1" rx="1"/>
+        </svg>
       </div>
 
       <!-- Look Behind Sofa trigger button -->

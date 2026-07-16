@@ -9,9 +9,44 @@ export function loadStage3(gameEngine) {
 
   let momMoved = false;
 
-  // Render HTML structure (Beautiful CSS-based SVG layouts with rich foyer furniture)
   viewport.innerHTML = `
     <div class="stage-entrance">
+      <!-- Floor division line -->
+      <div class="room-floor" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 30px; background: #cbd5e1; border-top: 3px solid #94a3b8; z-index: 0;"></div>
+
+      <!-- Standing Protagonist (Dressed in school uniform, facing Mother) -->
+      <div id="hero" class="character-avatar" style="position: absolute; bottom: 30px; left: 80px; z-index: 10; display: flex; flex-direction: column; align-items: center;">
+        <div class="character-head">
+          <svg width="48" height="48" viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="22" fill="#fed7aa" stroke="#f97316" stroke-width="2"/>
+            <circle cx="16" cy="20" r="5" fill="white" stroke="black" stroke-width="1.5"/>
+            <circle cx="16" cy="20" r="2" fill="black"/>
+            <circle cx="32" cy="20" r="5" fill="white" stroke="black" stroke-width="1.5"/>
+            <circle cx="32" cy="20" r="2" fill="black"/>
+            <ellipse id="hero-mouth" cx="24" cy="33" rx="6" ry="8" fill="#7f1d1d"/>
+            <!-- Toast in mouth (initially hidden) -->
+            <g id="hero-toast-mouth" style="display: none;">
+              <rect x="14" y="28" width="16" height="12" fill="#fdba74" rx="2" stroke="#c2410c" stroke-width="1"/>
+              <path d="M14 28 Q22 24 30 28" fill="#fdba74" stroke="#c2410c" stroke-width="1"/>
+              <rect x="18" y="30" width="8" height="6" fill="#ec4899" opacity="0.8"/>
+            </g>
+          </svg>
+        </div>
+        <div class="character-body-avatar" style="background: transparent;">
+          <svg width="60" height="90" viewBox="0 0 60 90">
+            <rect x="10" y="0" width="40" height="70" fill="#1e3a8a" rx="5" stroke="#172554" stroke-width="2"/>
+            <path d="M20 0 L30 20 L40 0" fill="#fed7aa"/>
+            <path d="M22 0 L25 15 L30 20 L35 15 L38 0" stroke="white" stroke-width="2.5" fill="none"/>
+            <path d="M28 20 L32 20 L33 45 L30 50 L27 45 Z" fill="#f43f5e"/>
+            <rect x="12" y="65" width="36" height="15" fill="#475569"/>
+          </svg>
+        </div>
+        <div class="character-legs">
+          <div class="character-leg" style="background:#fed7aa;"></div>
+          <div class="character-leg" style="background:#fed7aa;"></div>
+        </div>
+      </div>
+
       <!-- 1. Ceiling Sensor Light (Decoration) -->
       <div style="position: absolute; top: 0; right: 180px; width: 60px; height: 35px; z-index: 1; pointer-events: none;">
         <svg width="60" height="35" viewBox="0 0 60 35">
@@ -307,6 +342,12 @@ export function loadStage3(gameEngine) {
 
     // Hide food menu
     foodMenuEl.style.display = 'none';
+
+    // Show toast in hero mouth
+    const heroToast = document.getElementById('hero-toast-mouth');
+    const heroMouth = document.getElementById('hero-mouth');
+    if (heroToast) heroToast.style.display = 'block';
+    if (heroMouth) heroMouth.style.display = 'none';
 
     // Add toast to mouth visual in ending
     gameEngine.setHasToast(true);

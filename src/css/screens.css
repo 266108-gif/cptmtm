@@ -614,18 +614,16 @@
 .character-body-avatar {
   width: 60px;
   height: 90px;
-  background: #e2e8f0; /* Underwear base */
-  border-radius: 12px 12px 0 0;
+  background: transparent;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 10px;
   transition: background 0.3s;
 }
 
 .character-body-avatar.dressed {
-  background: #1e3a8a; /* Blue uniform blazer */
+  background: transparent;
 }
 
 .character-legs {
