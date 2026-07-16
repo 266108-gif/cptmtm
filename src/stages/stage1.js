@@ -1,7 +1,7 @@
 import { audio } from '../audio.js';
 import { showOkEffect } from '../components/ok-effect.js';
 
-export function loadStage1(gameEngine) {
+export function loadStage1(gameEngine, incomingAlarm = null) {
   const viewport = document.getElementById('stage-viewport');
   
   // Set stage title
@@ -203,8 +203,8 @@ export function loadStage1(gameEngine) {
     </div>
   `;
 
-  // Start with alarm ringing
-  const alarm = audio.playAlarm();
+  // Start with alarm ringing (Reuse incoming alarm if available, otherwise play a new one)
+  const alarm = incomingAlarm || audio.playAlarm();
   gameEngine.setDialogue("알람 시계", "따르릉!!! 따르릉!!! (화면을 클릭해 얼른 기상하자!)");
   
   // Elements
